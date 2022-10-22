@@ -30,6 +30,7 @@ if deviceOption > 0 and deviceOption <= noOfDevices:
     print("8.DerpFest")
     print("9.Paranoid Android")
     print("10.Bootleggers ROM")
+    print("11.AICP")
     print("")
 
 romOption = int(input("Enter Option for Rom : "))
@@ -103,10 +104,15 @@ def initBootleggers():
         os.system("mkdir Bootleggers")
     os.chdir("Bootleggers")
     os.system("repo init -u https://github.com/BootleggersROM/manifest.git -b queso")
-
+    
+def initAICP():
+    if os.path.exists("AICP") == False:
+        os.system("mkdir AICP")
+    os.chdir("AICP")
+    os.system("repo init -u https://github.com/AICP/platform_manifest.git -b r11.1")
 
 def sync():
-    os.system("repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags")
+    os.system("repo sync -c -j32 --force-sync --no-clone-bundle --no-tags")
 
 
 def envsetup():
@@ -252,6 +258,18 @@ if deviceOption == 1:
         # lunch = "lunch bootleg_" + codeName + "-userdebug"
         # os.system(lunch)
         # os.system("mka bacon  -j$(nproc --all)")
+        
+        elif romOption == 11:
+        print("comming soon...")
+        # initAICP()
+        # sync()
+        # os.system(gitDevice)
+        # os.system(gitKernel)
+        # os.system(gitVendor)
+        # envsetup()
+        # lunch = "lunch aicp_" + codeName + "-userdebug"
+        # os.system(lunch)
+        # os.system("make otapackage  -j16")
 
 
 elif deviceOption == 99:
@@ -377,4 +395,15 @@ elif deviceOption == 99:
         lunch = "lunch bootleg_" + codeName + "-userdebug"
         os.system(lunch)
         os.system("mka bacon  -j$(nproc --all)")
+        
+     elif romOption == 11:
+        initAICP()
+        sync()
+        os.system(gitDevice)
+        os.system(gitKernel)
+        os.system(gitVendor)
+        envsetup()
+        lunch = "lunch aicp_" + codeName + "-userdebug"
+        os.system(lunch)
+        os.system("make otapackage  -j16")
 
